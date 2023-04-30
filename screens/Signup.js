@@ -1,19 +1,54 @@
 import React from 'react'
-import { useState } from 'react'
-import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image } from 'react-native'
+import { useState, useEffect } from 'react'
+import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { authentication } from './firebase/firebase-config'
+import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
 
 const Signup = ({navigation}) => {
+
+  //state to check if user is signed in
+  const [isSignedIn, setIsSignedIn]=useState(false)
+
+  //states for email and password
   const [name, setName]=useState('')
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
 
+  //state for setting visibility of password
   const [passwordVisible, setPasswordVisible]= useState(true)
 
-  
+  //state for ActivityIndicator
+  const [loading,setLoading]=useState(false)
 
+  //function to create user
+  const RegisterUser=()=>{
+      setLoading(true)
+      createUserWithEmailAndPassword(authentication,email,password)
+      .then((re)=>{
+        setIsSignedIn(true)
+        // const user=authentication.currentUser
+        // user.displayName=name
+
+        updateProfile(authentication.currentUser, {
+          displayName: name
+        }).then(()=>{
+          console.log(authentication.currentUser.displayName)
+          navigation.navigate('HomeScreen')
+        }).catch((error)=>{
+
+        })
+
+        //console.log(re)
+        
+      })
+      .catch((re)=>{
+        console.log(re)
+      })
+  }
+  
   return (
     <SafeAreaView style={styles.container}>
       <FocussedStatusBar background={COLORS.primary}/>
@@ -48,9 +83,11 @@ const Signup = ({navigation}) => {
             />
             <Ionicons name={passwordVisible?'eye-off-outline':'eye-outline'} size={14} color={COLORS.gray} onPress={()=>setPasswordVisible(!passwordVisible)}/>
           </View>
-          <TouchableOpacity style={styles.buttonContainer}>
+          {loading?
+          <ActivityIndicator size="large" color={COLORS.primary}/>:
+          <TouchableOpacity style={styles.buttonContainer} onPress={RegisterUser}>
             <Text style={styles.button}>SIGN UP</Text>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
         <View style={{marginTop: 40, flexDirection: 'row', justifyContent: 'center'}}>
           <Text>Already have an account?</Text>
@@ -71,6 +108,17 @@ const styles=StyleSheet.create({
   secondaryContainer: {
     width: '100%',
   },
+  image: {
+    width: 100,
+    height: 100,
+    marginVertical: 20
+  },
+  mainText: {
+    fontSize: SIZES.extraLarge,
+    color: '#2BA84A',
+    marginBottom: 35,
+    fontFamily: FONTS.semiBold
+  },
   inputContainer: {
     flexDirection: 'row',
     borderWidth: 1,
@@ -85,12 +133,6 @@ const styles=StyleSheet.create({
   textInput: {
     color: COLORS.primary,
     flex: 8
-  },
-  mainText: {
-    fontSize: SIZES.extraLarge,
-    color: '#2BA84A',
-    marginBottom: 35,
-    fontFamily: FONTS.semiBold
   },
   buttonContainer: {
     backgroundColor: '#248232',
@@ -107,16 +149,6 @@ const styles=StyleSheet.create({
     fontSize: SIZES.font,
     fontFamily: FONTS.semiBold
   },
-  fpassword: {
-    flexDirection: 'row',
-    marginBottom: 9,
-    justifyContent: 'flex-end'
-  },
-  image: {
-    width: 100,
-    height: 100,
-    marginVertical: 20
- }
 })
 
 export default Signup
