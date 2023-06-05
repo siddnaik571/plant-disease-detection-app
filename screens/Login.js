@@ -9,8 +9,6 @@ import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 const Login = ({navigation}) => {
 
-  const [isSignedIn, setIsSignedIn]=useState(false)
-
   //states for email and password
   const [email, setEmail]=useState('')
   const [password, setPassword]=useState('')
@@ -21,13 +19,22 @@ const Login = ({navigation}) => {
   //state for ActivityIndicator
   const [loading,setLoading]=useState(false)
 
+  //state for focusing on input
+  const [focused,setFocused]=useState(null)
+
+  const handleFocus=(field)=>setFocused(field)
+  const handleBlur=()=>setFocused(null)
+
+  const borderColor=(field)=>focused===field?COLORS.secondary:COLORS.graylight
+
   const LoginUser=()=>{
     setLoading(true)
     signInWithEmailAndPassword(authentication,email,password)
     .then((re)=>{
-      setIsSignedIn(true)
       console.log(re)
-      navigation.navigate('HomeScreen')
+      // navigation.navigate('HomeScreen')
+      setLoading(false)
+      navigation.navigate('MainTabs', { screen: 'Tab1', params: { screen: 'HomeScreen' } })
     })
     .catch((err)=>{
       //console.log(re)
@@ -37,7 +44,7 @@ const Login = ({navigation}) => {
   const LogOutUser=()=>{
     signOut(authentication)
     .then((re)=>{
-      setIsSignedIn(false)
+
     })
     .catch((err)=>{
       //console.log(err)
@@ -48,39 +55,50 @@ const Login = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <FocussedStatusBar background={COLORS.primary}/>
       <View style={styles.secondaryContainer}>
-        <Image style={styles.image} source={require('../assets/images/test.png')}/>
+        <Image style={styles.image} source={require('../assets/ProjectLogo.png')} resizeMode='contain'/>
         <Text style={styles.mainText}>Welcome Back!</Text>
         <View>
-          <View style={styles.inputContainer}>
-            <Ionicons name='mail-outline' size={14} color={COLORS.gray} style={{flex: 1}}/>
-            <TextInput placeholder='Email' style={styles.textInput} value={email} onChangeText={text=>setEmail(text)}/>
+          <View style={[styles.inputContainer,{borderColor: borderColor('field1')}]}>
+            <Ionicons name='mail-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
+            <TextInput 
+              placeholder='Email' 
+              style={styles.textInput} 
+              value={email} 
+              onChangeText={text=>setEmail(text)} 
+              inputMode='email'
+              cursorColor={COLORS.secondary}  
+              onFocus={()=>handleFocus('field1')}
+              onBlur={handleBlur}
+            />
           </View>
-          <View style={styles.inputContainer}>
-            <Ionicons name='lock-closed-outline' size={14} color={COLORS.gray} style={{flex: 1}}/>
+          <View style={[styles.inputContainer,{borderColor: borderColor('field2')}]}>
+            <Ionicons name='lock-closed-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
             <TextInput 
               placeholder='Password' 
               style={styles.textInput} 
               value={password}
               secureTextEntry={passwordVisible}
               onChangeText={text=>setPassword(text)}
+              cursorColor={COLORS.secondary}
+              onFocus={()=>handleFocus('field2')}
+              onBlur={handleBlur}
             />
-            <Ionicons name={passwordVisible?'eye-off-outline':'eye-outline'} size={14} color={COLORS.gray} onPress={()=>setPasswordVisible(!passwordVisible)}/>
+            <Ionicons name={passwordVisible?'eye-off-outline':'eye-outline'} size={14} color={COLORS.grayneutral} onPress={()=>setPasswordVisible(!passwordVisible)}/>
           </View>
           
-          <View style={styles.fpassword}><Text style={{fontSize: SIZES.small}} onPress={()=>navigation.navigate('ForgotPassword')}>Forgot Password?</Text></View>
-          {isSignedIn?
-            <TouchableOpacity style={styles.buttonContainer} onPress={LogOutUser}>
-              <Text style={styles.button}>LOG OUT </Text>
-            </TouchableOpacity>:
-            loading?
-            <ActivityIndicator size="large" color={COLORS.primary}/>:
+          <View style={styles.fpassword}>
+            <Text style={{fontSize: SIZES.small, color: COLORS.graydark}} onPress={()=>navigation.navigate('ForgotPassword')}>
+              Forgot Password?
+            </Text>
+          </View>
+            {loading?
+            <ActivityIndicator size="large" color={COLORS.secondary}/>:
             <TouchableOpacity style={styles.buttonContainer} onPress={LoginUser}>
               <Text style={styles.button}>LOG IN </Text>
-            </TouchableOpacity>
-          }
+            </TouchableOpacity>}
         </View>
         <View style={{marginTop: 40, flexDirection: 'row', justifyContent: 'center'}}>
-          <Text>Don't have an account?</Text>
+          <Text style={{color: COLORS.graydark}}>Don't have an account?</Text>
           <Text style={styles.linkScreen} onPress={()=>navigation.navigate('Signup')}> Sign Up</Text>
         </View>
       </View>
@@ -105,23 +123,22 @@ const styles=StyleSheet.create({
   },
   mainText: {
     fontSize: SIZES.extraLarge,
-    color: '#2BA84A',
+    color: COLORS.secondary,
     marginBottom: 35,
     fontFamily: FONTS.semiBold
   },
   inputContainer: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderColor: '#EBEFEC',
-    color: '#120438',
+    // borderColor: COLORS.graylight,
     borderRadius: 6,
     width: '100%',
     padding: 9,
     marginBottom: 20,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textInput: {
-    color: COLORS.primary,
+    color: COLORS.graydark,
     flex: 8
   },
   fpassword: {
@@ -130,17 +147,17 @@ const styles=StyleSheet.create({
     justifyContent: 'flex-end'
   },
   buttonContainer: {
-    backgroundColor: '#248232',
+    backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 9,
     borderRadius: 4
   }, 
   button: {
-    color: '#FFF'
+    color: COLORS.white
   },
   linkScreen: {
-    color: '#2BA84A',
+    color: COLORS.secondary,
     fontSize: SIZES.font,
     fontFamily: FONTS.semiBold
   },

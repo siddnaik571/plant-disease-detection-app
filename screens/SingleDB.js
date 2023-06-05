@@ -3,10 +3,15 @@ import { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView, Pressable } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar, QueryBox, TabBar, Header } from '../components'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 
 const SingleDB = ({route}) => {
   let uid=0
-  const solList=route.params.disease.Solution.map((sol)=><Text key={uid++}>{`\u25AA ${sol}`}</Text>)
+  const solList=route.params.disease.Solution.map((sol)=><View key={uid++} style={{flexDirection: 'row'}}>
+                                                              <Ionicons name='square-sharp' size={9} color={COLORS.secondary} style={{marginTop: 5, marginRight: 4}}/>
+                                                              {/* <Text style={{color: 'red'}}>{`\u25AA`}</Text> */}
+                                                              <Text style={{color: COLORS.graydark}}>{`${sol}`}</Text>
+                                                          </View>)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -18,11 +23,11 @@ const SingleDB = ({route}) => {
               <Text style={styles.subText}>{route.params.disease.Plant}</Text>
           </View>
           <Pressable style={styles.contentBox}>
-          <View style={styles.imgCont}></View>
+              <View style={styles.imgCont}><Image source={{uri: route.params.disease.img}} style={styles.image}/></View>
               <Text style={styles.cause}>
                 Cause: <Text style={styles.causeName}>{route.params.disease.Cause}</Text>
               </Text>
-              <Text style={{fontSize: SIZES.medium, marginBottom: 2}}>Solution:</Text>
+              <Text style={{fontSize: SIZES.medium, marginBottom: 2, color: COLORS.graydark, fontFamily: FONTS.medium}}>Solution:</Text>
               {solList}
           </Pressable>
         </View>
@@ -44,7 +49,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         width: '100%',
         paddingHorizontal: 16,
-        backgroundColor: '#F7FDF8',
     },
     titleBox: {
       flex: 1,
@@ -53,7 +57,6 @@ const styles = StyleSheet.create({
     },
     contentBox: {
       flex: 4,
-      color: '#0B280F',
       width: '100%',
     },
     mainText: {
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     },
     subText: {
       fontSize: SIZES.large,
-      color: '#2BA84A',
+      color: COLORS.secondary,
       marginBottom: 10,
       fontFamily: FONTS.medium
     },
@@ -72,16 +75,23 @@ const styles = StyleSheet.create({
       height: 200,
       width: '100%',
       borderWidth: 1,
+      borderColor: '#D9D9D9',
       borderRadius: 5,
-      marginVertical: 10
+      marginVertical: 10,
+      alignItems: 'center'
     },
     cause: {
       fontSize: SIZES.medium,
       marginBottom: 10, 
-      color: '#0B280F',
+      color: COLORS.graydark,
+      fontFamily: FONTS.medium
     },
     causeName: {
-      color: '#2BA84A',
+      color: COLORS.secondary,
       fontFamily: FONTS.semiBold
+    },
+    image: {
+      height: '100%',
+      width: '50%',
     }
 })

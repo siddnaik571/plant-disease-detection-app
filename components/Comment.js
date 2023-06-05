@@ -31,33 +31,33 @@ const Comment = (props,{navigation}) => {
     const [downvoteNo,setDownvoteNo]=React.useState(props.obj.downvote)
 
     const changeUpVoteState=(id)=>{
-      if(upVote){
-          setUpvoteNo(prev=>prev-1)
-          props.updateUpVote(id,upvoteNo-1,upVote)
-      }else{
-          setUpvoteNo(prev=>prev+1)
-          props.updateUpVote(id,upvoteNo+1,upVote)
-          if(downVote){
-              setDownvoteNo(prev=>prev-1)
-              setDownVote(prev=>!prev)
-              props.updateDownVote(id,downvoteNo-1,downVote)
-          } 
-      }
-      setUpVote(prev=>!prev)              
+        if(upVote){
+            setUpvoteNo(prev=>prev-1)
+            props.updateUpVote(id,upvoteNo-1,upVote,props.arr)
+        }else{
+            setUpvoteNo(prev=>prev+1)
+            props.updateUpVote(id,upvoteNo+1,upVote,props.arr)
+            if(downVote){
+                setDownvoteNo(prev=>prev-1)
+                setDownVote(prev=>!prev)
+                props.updateDownVote(id,downvoteNo-1,downVote,props.arr)
+            } 
+        }
+        setUpVote(prev=>!prev)      
     }
 
     //
     const changeDownVoteState=(id)=>{
         if(downVote){
             setDownvoteNo(prev=>prev-1)
-            props.updateDownVote(id,downvoteNo-1,downVote)
+            props.updateDownVote(id,downvoteNo-1,downVote,props.arr)
         }else{
             setDownvoteNo(prev=>prev+1)
-            props.updateDownVote(id,downvoteNo+1,downVote)
+            props.updateDownVote(id,downvoteNo+1,downVote,props.arr)
             if(upVote){
                 setUpvoteNo(prev=>prev-1)
                 setUpVote(prev=>!prev)
-                props.updateUpVote(id,upvoteNo-1,upVote)
+                props.updateUpVote(id,upvoteNo-1,upVote,props.arr)
             } 
         }
         setDownVote(prev=>!prev)              
@@ -66,7 +66,7 @@ const Comment = (props,{navigation}) => {
     return (
       <View style={styles.queryBox}>
         <View style={styles.queryBoxHeader}>
-            <View><Image style={styles.avatar} source={require('../assets/images/profile_picture.png')}/></View>
+            <View><Image style={styles.avatar} source={{uri: props.obj.user.pimg}}/></View>
             <View style={{flexDirection: 'row', gap: 4}}>
               <Text style={styles.profileName}>{props.obj.user.name}</Text>
               <Entypo name="dot-single" size={15} color="#708090"/>
@@ -82,18 +82,18 @@ const Comment = (props,{navigation}) => {
                 name={upVote? 'arrow-up-bold':'arrow-up-bold-outline'} 
                 size={18} 
                 color={upVote? '#248232':'#708090'}
-                onPress={changeUpVoteState}
+                onPress={()=>changeUpVoteState(props.obj.id)}
             />
-            <Text style={styles.iconData}>{props.obj.upvote}</Text>
+            <Text style={styles.iconData}>{upvoteNo}</Text>
           </View>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <MaterialCommunityIcons 
                 name={downVote? 'arrow-down-bold':'arrow-down-bold-outline'} 
                 size={18} 
                 color={downVote? '#248232':'#708090'}
-                onPress={changeDownVoteState}
+                onPress={()=>changeDownVoteState(props.obj.id)}
             />
-            <Text style={styles.iconData}>{props.obj.downvote}</Text>
+            <Text style={styles.iconData}>{downvoteNo}</Text>
           </View>
         </View>
       </View>

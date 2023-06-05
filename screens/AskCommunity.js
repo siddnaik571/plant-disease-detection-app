@@ -35,7 +35,8 @@ const AskCommunity = ({navigation}) => {
             postTime: Timestamp.fromDate(new Date()),
             user: {
                 id: authentication.currentUser.uid,
-                name: authentication.currentUser.displayName
+                name: authentication.currentUser.displayName,
+                pimg: authentication.currentUser.photoURL
             },
         });
 
@@ -100,7 +101,7 @@ const styles=StyleSheet.create({
         fontSize: 30
     },
     buttonContainer: {
-        backgroundColor: '#248232',
+        backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
@@ -108,12 +109,12 @@ const styles=StyleSheet.create({
         height: 30
     }, 
     buttonText: {
-        color: '#FFF'
+        color: COLORS.white
     },
     title: {
         minHeight: 50,
         marginVertical: 20,
-        borderColor: '#EBEFEC',
+        borderColor: COLORS.graylight,
         borderBottomWidth: 1,
         paddingBottom: 10,
     },

@@ -8,7 +8,6 @@ import { collection, getDocs, doc, setDoc } from 'firebase/firestore/lite'
 import { authentication } from './firebase/firebase-config'
 import { db } from './firebase/firebase-config'
 
-
 const DiseaseInfo = ({navigation}) => {
 
   //state to store the array of diseases
@@ -23,11 +22,9 @@ const DiseaseInfo = ({navigation}) => {
   }
 
   //map over diseases array to create list of JSX elements
-  const DiseaseJSX=diseases.map((disease)=><DiseaseBox 
-                                key={disease.id} 
-                                disease={disease} 
-                                navigation={navigation}
-                                />)
+  const DiseaseJSX=diseases.map((disease)=>{
+    return <DiseaseBox key={disease.id} disease={disease} navigation={navigation}/>
+  })
 
   useEffect(()=>{
     GetData()
@@ -42,7 +39,7 @@ const DiseaseInfo = ({navigation}) => {
             {DiseaseJSX}
           </View>
         </ScrollView>
-        <TabBar navigation={navigation}/>
+        {/* <TabBar navigation={navigation}/> */}
     </SafeAreaView>
   )
 }
@@ -59,14 +56,14 @@ const styles = StyleSheet.create({
       flex: 1,
       width: '100%',
       paddingHorizontal: 16,
-      backgroundColor: '#F7FDF8'
+      // backgroundColor: '#F7FDF8'
   },
   mainBox: {
       width: '100%',
       flexDirection: 'row',
       flexWrap: 'wrap',
       rowGap: 24.5,
-      marginTop: 20,
+      marginVertical: 20,
       justifyContent: 'space-between'
   },
 })

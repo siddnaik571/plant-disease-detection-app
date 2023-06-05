@@ -30,9 +30,8 @@ const QueryBox=(props)=>{
 
     const [upvoteNo,setUpvoteNo]=useState(props.obj.upvote)
     const [downvoteNo,setDownvoteNo]=useState(props.obj.downvote)
-    const [commentNo, setCommentNo]=useState(0)
 
-    //
+    //function to change no of upvotes
     const changeUpVoteState=(id)=>{
         if(upVote){
             setUpvoteNo(prev=>prev-1)
@@ -49,7 +48,7 @@ const QueryBox=(props)=>{
         setUpVote(prev=>!prev)              
     }
 
-    //
+    //function to change no of  downvotes
     const changeDownVoteState=(id)=>{
         if(downVote){
             setDownvoteNo(prev=>prev-1)
@@ -66,15 +65,10 @@ const QueryBox=(props)=>{
         setDownVote(prev=>!prev)              
     }
 
-    const changeComment=()=>{
-        console.log("Zoro: ",props.obj.commentList.length)
-    }
-
     return (
         <View style={styles.queryBox}>
-            {changeComment()}
             <View style={styles.queryBoxHeader}>
-                <View><Image style={styles.avatar} source={require('../assets/images/profile_picture.png')}/></View>
+                <View><Image style={styles.avatar} source={{uri: props.obj.user.pimg}}/></View>
                 <View>
                     <Text style={styles.profileName}>{props.obj.user.name}</Text>
                     <Text style={styles.profileDate}>1 day</Text>
@@ -151,7 +145,7 @@ const styles=StyleSheet.create({
         marginRight: 7
     },
     profileName: {
-        color: '#248232',
+        color: COLORS.primary,
         fontSize: 12,
         fontFamily: FONTS.medium
     },

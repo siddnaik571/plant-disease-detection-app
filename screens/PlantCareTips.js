@@ -2,10 +2,15 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView, Pressable } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
-import { FocussedStatusBar, QueryBox, TabBar, Header } from '../components'
+import { FocussedStatusBar, Header } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
 
 const PlantCareTips = ({navigation}) => {
+
+    const [balcony,setBalcony]=useState(false)
+    const [garden,setGarden]=useState(false)
+    const [procedure,setProcedure]=useState(false)
+    const [tip,setTip]=useState(false)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -13,75 +18,55 @@ const PlantCareTips = ({navigation}) => {
         <Header/>
         <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}>
             <View style={styles.mainBox}>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant2.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Tomato</Text>
+                <TouchableOpacity style={styles.contBox} onPress={()=>setBalcony(prev=>!prev)}>
+                    <Text style={{color: COLORS.secondary, fontFamily: FONTS.medium, fontSize: SIZES.medium}}>Balcony</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant7.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Strawberry</Text>
+                {balcony && <View style={{gap: 10, marginBottom: 10}}>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Balcony1')}>
+                        <Text>Planting Seeds</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Balcony2')}>
+                        <Text>Planting Saplings</Text>
+                    </TouchableOpacity>
+                </View>}
+                <TouchableOpacity style={styles.contBox} onPress={()=>setGarden(prev=>!prev)}>
+                    <Text style={{color: COLORS.secondary, fontFamily: FONTS.medium, fontSize: SIZES.medium}}>Garden/Backyard</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant8.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Squash</Text>
+                {garden && <View style={{gap: 10, marginBottom: 10}}>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Garden1')}>
+                        <Text>Planting Seeds</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Garden2')}>
+                        <Text>Planting Saplings</Text>
+                    </TouchableOpacity>
+                </View>}
+                <TouchableOpacity style={styles.contBox} onPress={()=>setProcedure(prev=>!prev)}>
+                    <Text style={{color: COLORS.secondary, fontFamily: FONTS.medium, fontSize: SIZES.medium}}>Growing plants</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant11.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Potato</Text>
+                {procedure && <View style={{gap: 10, marginBottom: 10}}>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Garden1')}>
+                        <Text>Planting Seeds</Text>
+                    </TouchableOpacity>
+                </View>}
+                <TouchableOpacity style={styles.contBox} onPress={()=>setTip(prev=>!prev)}>
+                    <Text style={{color: COLORS.secondary, fontFamily: FONTS.medium, fontSize: SIZES.medium}}>Tips</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant3.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Pepper Bell</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant10.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Peach</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant1.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Orange</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant4.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Grapes</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant5.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Corn</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                    <Image style={styles.image} source={require('../assets/images/Plants/Plant9.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Cherry</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.contBox} onPress={()=>navigation.navigate('SinglePCT')}>
-                    <View style={styles.subBox}>
-                        <Image style={styles.image} source={require('../assets/images/Plants/Plant6.png')}/>
-                    </View>
-                    <Text style={styles.plantName}>Apple</Text>
-                </TouchableOpacity>
+                {tip && <View style={{gap: 10}}>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Tip1')}>
+                        <Text>Boost Growth Rate</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Tip2')}>
+                        <Text>Tips for Balcony</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Tip3')}>
+                        <Text>Tools</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.subBox} onPress={()=>navigation.push('Tip4')}>
+                        <Text>Planting Options</Text>
+                    </TouchableOpacity>
+                </View>}
             </View>
         </ScrollView>
-        <TabBar navigation={navigation}/>
     </SafeAreaView>
   )
 }
@@ -98,30 +83,29 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         paddingHorizontal: 16,
-        backgroundColor: '#F7FDF8'
     },
     mainBox: {
         width: '100%',
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 24.5,
-        marginVertical: 40
+        marginVertical: 20,
     },
     contBox: {
-        height: 110,
-        width: 110,
+        height: 70,
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center' ,
+        marginVertical: 10,
+        backgroundColor: '#F7FDF8',
+        borderRadius: 4,
     },
     subBox: {
-        height: 90,
-        width: 90,
-        borderRadius: 90/2,
+        height: 50,
+        width: '100%',
         // borderWidth: 1,
         // borderColor: '#EBEFEC',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff'
+        backgroundColor: COLORS.graylight,
+        borderRadius: 4
     },
     image: {
         height: 80,

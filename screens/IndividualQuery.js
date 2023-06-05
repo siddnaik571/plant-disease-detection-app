@@ -4,7 +4,7 @@ import { FocussedStatusBar, QueryBox, Comment } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { Entypo, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons'
-import { collection, getDocs, doc, setDoc, Firestore, Timestamp, increment, updateDoc, arrayUnion } from 'firebase/firestore/lite'
+import { collection, getDocs, doc, setDoc, Firestore, Timestamp, increment, updateDoc, arrayUnion, FieldValue, arrayRemove, getDoc } from 'firebase/firestore/lite'
 import { authentication } from './firebase/firebase-config'
 import { db } from './firebase/firebase-config'
 
@@ -14,41 +14,56 @@ const IndividualQuery = ({navigation,route}) => {
     const [comment,setComment]=React.useState('')
 
     //function to update upvotes 
-    const updateUpVote=async(id,upvoteNo,upVote)=>{
+    const updateUpVote=async(id,upvoteNo,upVote,arr)=>{
+
+        const index = arr.findIndex((obj)=>{
+            if(obj!==null){
+                return obj.id===id
+            }
+        });
+
+        const queryRef = doc(db, "queries", String(route.params.obj.id));
+        const matches=await getDoc(queryRef)
+        const docData = matches.data()
+        docData.commentList[index].upvote=upvoteNo
+
         if(upVote){
-            await updateDoc(doc(db,"queries",String(id)),{
-                "commentList":{
-                    "upvote": upvoteNo,
-                    "upvotelist": arrayRemove(authentication.currentUser.uid)
-                }
-            })
+            const ind = docData.commentList[index].upvotelist.findIndex((obj)=>obj===(authentication.currentUser.uid))
+            docData.commentList[index].upvotelist.splice(ind,1)
         }else{
-            await updateDoc(doc(db,"queries",String(id)),{
-                "commentList":{
-                    "upvote": upvoteNo,
-                    "upvotelist": arrayUnion(authentication.currentUser.uid)
-                }
-            })
+            console.log("Egg")
+            docData.commentList[index].upvotelist.push(authentication.currentUser.uid)
         }
+
+        return updateDoc(queryRef, {
+            ...docData
+        });
     }
 
     //function to update downvotes
-    const updateDownVote=async(id,downvoteNo,downVote)=>{
+    const updateDownVote=async(id,downvoteNo,downVote,arr)=>{
+
+        const index = arr.findIndex((obj)=>{
+            if(obj!==null){
+                return obj.id===id
+            }
+        });
+
+        const queryRef = doc(db, "queries", String(route.params.obj.id));
+        const matches=await getDoc(queryRef)
+        const docData = matches.data()
+        docData.commentList[index].downvote=downvoteNo
+
         if(downVote){
-            await updateDoc(doc(db,"queries",String(id)),{
-                "commentList": {
-                    "downvote": downvoteNo,
-                    "downvotelist": arrayRemove(authentication.currentUser.uid)
-                }
-            })
+            const ind = docData.commentList[index].downvotelist.findIndex((obj)=>obj===(authentication.currentUser.uid))
+            docData.commentList[index].downvotelist.splice(ind,1)
         }else{
-            await updateDoc(doc(db,"queries",String(id)),{
-                "commentList": {
-                    "downvote": downvoteNo,
-                    "downvotelist": arrayUnion(authentication.currentUser.uid)
-                }
-            })
+            docData.commentList[index].downvotelist.push(authentication.currentUser.uid)
         }
+
+        return updateDoc(queryRef, {
+            ...docData
+        });
     }
 
     const UpdateData=async()=>{
@@ -66,18 +81,22 @@ const IndividualQuery = ({navigation,route}) => {
                     postTime: Timestamp.fromDate(new Date()),
                     user: {
                         id: authentication.currentUser.uid,
-                        name: authentication.currentUser.displayName
+                        name: authentication.currentUser.displayName,
+                        pimg: authentication.currentUser.photoURL
                     },
                 }
             )
         });
+
+        setComment('')
+
         navigation.push('CommunityTimeline')
     }
 
-    const commentJSX=route.params.obj.commentList.map((com)=>{
+    const commentJSX=route.params.obj.commentList.map((com,index)=>{
         if(com!=null){
             return (
-                <Comment obj={com} updateUpVote={updateUpVote} updateDownVote={updateDownVote}/>
+                <Comment key={index} arr={route.params.obj.commentList} obj={com} updateUpVote={updateUpVote} updateDownVote={updateDownVote}/>
             )
         }
     })
@@ -87,10 +106,9 @@ const IndividualQuery = ({navigation,route}) => {
         <FocussedStatusBar background={COLORS.primary}/>
         <View style={styles.secondaryContainer}>
             <View style={styles.header}>
-                <AntDesign name='arrowleft' size={20} color="#708090"/>
+                <AntDesign name='arrowleft' size={20} color="#708090" onPress={()=>navigation.navigate('CommunityTimeline')}/>
             </View>
             <View style={{flex: 5}}>
-                {console.log(commentJSX.length)}
                 {commentJSX}
             </View>
             <View style={styles.commentBox}>
@@ -100,7 +118,7 @@ const IndividualQuery = ({navigation,route}) => {
                            multiline={true}
                 />
                 <TouchableOpacity style={styles.buttonContainer} onPress={UpdateData}>
-                    <Text>Post</Text>
+                    <Text style={styles.button}>Post</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -117,7 +135,6 @@ const styles=StyleSheet.create({
     secondaryContainer: {
         flex: 1,
         width: '100%',
-        // marginVertical: 15
     },
     header:{
         height: 60,
@@ -130,13 +147,13 @@ const styles=StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 16,
         borderBottomWidth: 1,
-        borderColor: '#EBEFEC',
+        borderColor: COLORS.graylight,
       },
     back: {
         fontSize: 30
     },
     buttonContainer: {
-        backgroundColor: '#248232',
+        backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
@@ -144,12 +161,14 @@ const styles=StyleSheet.create({
         height: 30
     }, 
     button: {
-      color: '#FFF'
+      color: COLORS.white
     },
     commentBox: {
         height: 50,
         padding: 10,
         borderWidth: 1,
+        borderColor: COLORS.graylight,
+        borderRadius: 5,
         marginHorizontal: 16,
         marginVertical: 10,
         flexDirection: 'row',

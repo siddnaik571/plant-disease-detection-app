@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView, Pressable } from 'react-native'
+import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView, Pressable, RefreshControl } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar, QueryBox, TabBar } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -9,6 +9,8 @@ import { authentication } from './firebase/firebase-config'
 import { db } from './firebase/firebase-config'
 
 const CommunityTimeline=({navigation,route})=>{
+
+    const [refreshing, setRefreshing] = React.useState(false);
 
     //state to hold list of queries from firestore
     const [queries, setQueries]=useState([])
@@ -24,6 +26,14 @@ const CommunityTimeline=({navigation,route})=>{
     useEffect(()=>{
         GetData()
     },[])
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        GetData()
+        setTimeout(() => {
+          setRefreshing(false);
+        }, 2000);
+      }, []);  
 
     //function to update upvotes 
     const updateUpVote=async(id,upvoteNo,upVote)=>{
@@ -61,17 +71,18 @@ const CommunityTimeline=({navigation,route})=>{
     return (
         <SafeAreaView style={styles.container}>
             <FocussedStatusBar background={COLORS.primary}/>
-            <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}>
+            <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} progressBackgroundColor={COLORS.white} colors={[COLORS.primary]}/>}>
                 <Text style={styles.mainText}>Ask Community</Text>
                 <View>
                     {queryJSX}
                 </View>
             </ScrollView>
             <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.push('AskCommunity')}>
-                <Ionicons name="pencil" color="#fff"/>
+                <Ionicons name="pencil" color={COLORS.white}/>
                 <Text style={styles.button}>Ask Community</Text>
             </TouchableOpacity>
-            <TabBar navigation={navigation}/>
+            {/* <TabBar navigation={navigation}/> */}
         </SafeAreaView>
     )
 }
@@ -89,13 +100,13 @@ const styles=StyleSheet.create({
     },
     mainText: {
         fontSize: SIZES.extraLarge,
-        color: '#2BA84A',
+        color: COLORS.secondary,
         marginTop: 45,
         marginBottom: 35,
         fontFamily: FONTS.semiBold
     },
     buttonContainer: {
-        backgroundColor: '#248232',
+        backgroundColor: COLORS.primary,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -104,11 +115,11 @@ const styles=StyleSheet.create({
         width: 155,
         height: 43,
         position: 'absolute',
-        bottom: 70,
+        bottom: 10,
         right: 16
     }, 
     button: {
-      color: '#FFF'
+      color: COLORS.white
     },
 })
 
