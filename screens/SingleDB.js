@@ -23,7 +23,7 @@ const SingleDB = ({route}) => {
               <Text style={styles.subText}>{route.params.disease.Plant}</Text>
           </View>
           <Pressable style={styles.contentBox}>
-              <View style={styles.imgCont}><Image source={{uri: route.params.disease.img}} style={styles.image}/></View>
+              <View style={styles.imgCont}><Image source={{uri: route.params.dimg}} style={styles.image}/></View>
               <Text style={styles.cause}>
                 Cause: <Text style={styles.causeName}>{route.params.disease.Cause}</Text>
               </Text>

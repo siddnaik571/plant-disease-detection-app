@@ -62,25 +62,12 @@ const DetectionScreen2 = ({navigation, route}) => {
                     <Text>Potato</Text>
                 </View>
                 <ScrollView style={{width: '70%'}} showsVerticalScrollIndicator={false}>
-                    <TouchableOpacity style={styles.button} onPress={changeCause}>
-                        <Text>CAUSE</Text>
+                    <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('SingleDB', {disease: obj, dimg: imageUri})}>
+                        <Text>MORE INFO</Text>
                     </TouchableOpacity>
                     {showCause && <View style={styles.info}>
                         <Text style={{textAlign: 'justify'}}>
                             {obj.Cause}
-                        </Text>
-                    </View>}
-                    <TouchableOpacity style={styles.button} onPress={changeSolution}>
-                        <Text>SOLUTION</Text>
-                    </TouchableOpacity>
-                    {showSolution && <View style={styles.info}>
-                        <Text style={{textAlign: 'justify'}}>Lorem ipsum dolor sit amet, consec tetur adipiscing elit, 
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                            Ut enim ad minim veni am, quis nostrud exercitation ullamco laboris
-                             nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor 
-                             in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                              nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                               culpa qui officia deserunt mollit anim id est laborum
                         </Text>
                     </View>}
                 </ScrollView>

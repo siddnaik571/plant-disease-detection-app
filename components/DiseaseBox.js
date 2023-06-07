@@ -5,7 +5,7 @@ import { COLORS, FONTS, SIZES } from '../constants'
 const DiseaseBox = (props) => {
 
   return (
-    <TouchableOpacity style={styles.contBox} onPress={()=>props.navigation.navigate('SingleDB', {key: props.disease.id, disease: props.disease})}>
+    <TouchableOpacity style={styles.contBox} onPress={()=>props.navigation.navigate('SingleDB', {key: props.disease.id, disease: props.disease, dimg: props.disease.img})}>
         <View style={styles.upperBox}>
           <Image source={{uri: props.disease.img}} style={styles.image}/>
         </View>
