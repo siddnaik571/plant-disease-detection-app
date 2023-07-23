@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native'
 import React from 'react'
 import { FocussedStatusBar } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -8,6 +8,8 @@ import { authentication } from './firebase/firebase-config'
 import { db } from './firebase/firebase-config'
 
 const AskCommunity = ({navigation}) => {
+
+    const [loading,setLoading]=React.useState(false)
 
     //states to store title and description
     const [title,setTitle]=React.useState('')
@@ -20,6 +22,8 @@ const AskCommunity = ({navigation}) => {
         // const quesList=quesSnapshot.docs.map(doc=>doc.data())
         // console.log(quesList)
         //queslist is a list of objects
+
+        setLoading(true)
 
         const id=Math.random()*20000
         await setDoc(doc(db, "queries", String(id)), {
@@ -39,13 +43,13 @@ const AskCommunity = ({navigation}) => {
                 pimg: authentication.currentUser.photoURL
             },
         });
-
+        setLoading(false)
         navigation.push('CommunityTimeline')
           
-     }
+    }
 
 
-  return (
+    return (
     <SafeAreaView style={styles.container}>
         <FocussedStatusBar background={COLORS.primary}/>
         <View style={styles.secondaryContainer}>
@@ -53,9 +57,14 @@ const AskCommunity = ({navigation}) => {
                 <Ionicons name='close-outline' style={styles.close} 
                 onPress={()=>navigation.navigate('CommunityTimeline')}
                 />
+                {loading?
+                <TouchableOpacity style={styles.buttonContainer2}>
+                    <ActivityIndicator size="small" color={COLORS.secondary}/>
+                </TouchableOpacity>:
                 <TouchableOpacity style={styles.buttonContainer} onPress={SetData}>
                     <Text style={styles.buttonText}>Post</Text>
                 </TouchableOpacity>
+                }
             </View>
             <View>
                 <View style={styles.title}>
@@ -98,13 +107,20 @@ const styles=StyleSheet.create({
         alignItems: 'center'
     },
     close: {
-        fontSize: 30
+        fontSize: 30,
+        color: COLORS.grayneutral
     },
     buttonContainer: {
         backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
+        width: 60,
+        height: 30
+    }, 
+    buttonContainer2: {
+        justifyContent: 'center',
+        alignItems: 'center',
         width: 60,
         height: 30
     }, 

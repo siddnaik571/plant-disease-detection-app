@@ -31,6 +31,11 @@ import Tip1 from './screens/Tip1';
 import Tip2 from './screens/Tip2';
 import Tip3 from './screens/Tip3';
 import Tip4 from './screens/Tip4';
+import Procedure from './screens/Procedure1';
+import Help1 from './screens/Help1';
+import Help2 from './screens/Help2';
+import Help3 from './screens/Help3';
+import AppInfo from './screens/AppInfo';
 
 
 const Stack=createNativeStackNavigator()
@@ -94,6 +99,7 @@ export default function App() {
                             <Stack.Screen name='Tip2' component={Tip2}/>
                             <Stack.Screen name='Tip3' component={Tip3}/>
                             <Stack.Screen name='Tip4' component={Tip4}/>
+                            <Stack.Screen name='Procedure1' component={Procedure}/>
                           </Stack.Navigator>
                         )
                     }
@@ -116,6 +122,10 @@ export default function App() {
                             <Stack.Screen name='UserProfile' component={UserProfile}/>
                             <Stack.Screen name='EditProfile' component={EditProfile}/>
                             <Stack.Screen name='Help' component={Help}/>
+                            <Stack.Screen name='Help1' component={Help1}/>
+                            <Stack.Screen name='Help2' component={Help2}/>
+                            <Stack.Screen name='Help3' component={Help3}/>
+                            <Stack.Screen name='AppInfo' component={AppInfo}/>
                           </Stack.Navigator>
                         )
                     }

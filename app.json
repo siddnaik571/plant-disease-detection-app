@@ -4,10 +4,10 @@
     "slug": "plantify",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/PlantifyLogo.png",
+    "icon": "./assets/PlantifyLogo2.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splashPlantify.png",
+      "image": "./assets/splashPlantify2.png",
       "resizeMode": "contain",
       "backgroundColor": "#F7FDF8"
     },

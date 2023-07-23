@@ -67,21 +67,21 @@ const Comment = (props,{navigation}) => {
       <View style={styles.queryBox}>
         <View style={styles.queryBoxHeader}>
             <View><Image style={styles.avatar} source={{uri: props.obj.user.pimg}}/></View>
-            <View style={{flexDirection: 'row', gap: 4}}>
+            <View style={{flexDirection: 'row', gap: 2}}>
               <Text style={styles.profileName}>{props.obj.user.name}</Text>
-              <Entypo name="dot-single" size={15} color="#708090"/>
-              <Text style={styles.profileDate}>1 day</Text>
+              <Entypo name="dot-single" size={15} color={COLORS.graydark}/>
+              <Text style={styles.profileDate}>{(props.obj.postTime).toDate().toDateString().substr(4)}</Text>
             </View>
         </View>
         <View style={styles.queryBoxBody}>
-          <Text style={{color: '#708090'}}>{props.obj.comment}</Text>
+          <Text style={{color: COLORS.graydark}}>{props.obj.comment}</Text>
         </View>
         <View style={styles.votes}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <MaterialCommunityIcons 
                 name={upVote? 'arrow-up-bold':'arrow-up-bold-outline'} 
                 size={18} 
-                color={upVote? '#248232':'#708090'}
+                color={upVote? COLORS.primary:COLORS.graydark}
                 onPress={()=>changeUpVoteState(props.obj.id)}
             />
             <Text style={styles.iconData}>{upvoteNo}</Text>
@@ -90,7 +90,7 @@ const Comment = (props,{navigation}) => {
             <MaterialCommunityIcons 
                 name={downVote? 'arrow-down-bold':'arrow-down-bold-outline'} 
                 size={18} 
-                color={downVote? '#248232':'#708090'}
+                color={downVote? COLORS.primary:COLORS.graydark}
                 onPress={()=>changeDownVoteState(props.obj.id)}
             />
             <Text style={styles.iconData}>{downvoteNo}</Text>
@@ -104,13 +104,15 @@ export default Comment
 
 const styles = StyleSheet.create({
     queryBox: {
-        borderColor: '#D9D9D9',
-        borderWidth: 1,
+        // borderColor: COLORS.graylight,
+        // borderWidth: 1,
         width: '100%',
         marginBottom: 12,
+        borderRadius: 5,
+        backgroundColor: COLORS.white
     },
     queryBoxHeader: {
-        borderBottomColor: '#D9D9D9',
+        borderBottomColor: COLORS.graylight,
         borderBottomWidth: 1,
         paddingHorizontal: 13,
         paddingVertical: 6,
@@ -118,18 +120,19 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     queryBoxBody: {
-
-        borderBottomColor: '#D9D9D9',
+        borderBottomColor: COLORS.graylight,
         borderBottomWidth: 1,
         paddingHorizontal: 13,
         paddingVertical: 10,
     },
     profileName: {
-        color: '#248232',
-        fontSize: 12
+        color: COLORS.primary,
+        fontSize: 12,
+        fontFamily: FONTS.medium
     },
     profileDate: {
-        fontSize: 11
+        fontSize: 11,
+        color: COLORS.graydark
     },
     avatar: {
         borderRadius: 30,
@@ -146,6 +149,6 @@ const styles = StyleSheet.create({
     },
     iconData: {
       marginLeft: 1,
-      color: '#708090'
+      color: COLORS.graydark
   }
 })

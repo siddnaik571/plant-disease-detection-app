@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, TouchableOpacity, ToastAndroid, Alert, Image, ActivityIndicator, Pressable} from 'react-native'
+import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, TouchableOpacity, ToastAndroid, Alert, Image, ActivityIndicator, Pressable, ImageBackground} from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -84,7 +84,7 @@ const EditProfile = ({navigation}) => {
             contentType: 'image/jpeg'
         }
 
-        const storageRef = ref(storage, `images/${authentication.currentUser.uid}`);
+        const storageRef = ref(storage, `user_img/${authentication.currentUser.uid}`);
         const uploadTask = uploadBytesResumable(storageRef, blobImage, metadata);
 
         uploadTask.on('state_changed', 
@@ -131,57 +131,59 @@ const EditProfile = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.container}>
-          <FocussedStatusBar background={COLORS.primary}/>
-          <View style={styles.header}>
-              <Ionicons name='chevron-back' size={20} color={COLORS.graydark} onPress={()=>navigation.push('UserProfile')}/>
-              <Text  style={{color: COLORS.graydark, fontFamily: FONTS.semiBold}}>Edit Profile</Text>
-              {loading?
-              <ActivityIndicator size="small" color={COLORS.secondary}/>:
-              <Ionicons name='checkmark-sharp' size={20} color={COLORS.primary} onPress={editDetails}/>}
-          </View>
-          <View style={styles.secondaryContainer}>
-              <View style={styles.userInfo}>
-                  <Pressable style={styles.imageContainer} onPress={pickImage}>
-                      <Image
-                        style={styles.userImg}
-                        source={{uri: imageUri}}
-                      />
-                      <View style={styles.iconcam}>
-                        <Ionicons name='camera-outline' size={20} color={COLORS.graydark}/>
-                      </View>
-                  </Pressable>
-              </View>
-                  <Text style={styles.heading}>Your information</Text>
-                  <View style={styles.inputContainer}>
-                      <Ionicons name='person-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
-                      <TextInput placeholder='Name'
+            <FocussedStatusBar background={COLORS.primary}/>
+            <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%'}}>
+            <View style={styles.header}>
+                <Ionicons name='chevron-back' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('UserProfile')}/>
+                <Text  style={styles.ztext}>Edit Profile</Text>
+                {loading?
+                <ActivityIndicator size="small" color={COLORS.secondary}/>:
+                <Ionicons name='checkmark-sharp' size={30} color={COLORS.tertiary} onPress={editDetails}/>}
+            </View>
+            <View View style={styles.secondaryContainer}>
+                <View style={styles.userInfo}>
+                    <Pressable style={styles.imageContainer} onPress={pickImage}>
+                        <Image
+                            style={styles.userImg}
+                            source={{uri: imageUri}}
+                        />
+                        <View style={styles.iconcam}>
+                            <Ionicons name='camera-outline' size={20} color={COLORS.graydark}/>
+                        </View>
+                    </Pressable>
+                </View>
+                <Text style={styles.heading}>Your information</Text>
+                <View style={styles.inputContainer}>
+                    <Ionicons name='person-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
+                    <TextInput placeholder='Name'
                        value={name} 
                        style={styles.textInput}
                        onChangeText={text=>setName(text)}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Ionicons name='mail-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
-              <TextInput placeholder='Email'
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Ionicons name='mail-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
+                    <TextInput placeholder='Email'
                        value={email} 
                        style={styles.textInput}
                        onChangeText={text=>setEmail(text)}
                        keyboardType='email-address'
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Ionicons name='call-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
-              <TextInput placeholder='Phone'
+                    />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Ionicons name='call-outline' size={14} color={COLORS.grayneutral} style={{flex: 1}}/>
+                    <TextInput placeholder='Phone'
                        value={phone} 
                        style={styles.textInput}
                        onChangeText={text=>setPhone(text)}
                        keyboardType='numeric'
-              />
-            </View>
+                    />
+                </View>
 
-        </View>
+            </View>
+            </ImageBackground>
         
-      </SafeAreaView>
+        </SafeAreaView>
     )
   }
 
@@ -201,8 +203,8 @@ const styles=StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
-        borderBottomWidth: 1,
-        borderColor: COLORS.graylight,
+        // borderBottomWidth: 1,
+        // borderColor: COLORS.graylight,
     },
     secondaryContainer: {
         width: '100%',
@@ -239,22 +241,28 @@ const styles=StyleSheet.create({
         fontSize: SIZES.large,
         fontFamily: FONTS.medium,
         marginVertical: 10,
-        color: COLORS.secondary
+        color: COLORS.tertiary
     },
     inputContainer: {
         flexDirection: 'row',
-        borderWidth: 1,
-        borderColor: COLORS.graylight,
+        // borderWidth: 1,
+        // borderColor: COLORS.graylight,
         borderRadius: 6,
         width: '100%',
         padding: 9,
         marginBottom: 20,
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: COLORS.white
     },
     textInput: {
         color: COLORS.graydark,
         flex: 8
     },
+    ztext: {
+        fontSize: SIZES.large,
+        fontFamily: FONTS.bold,
+        color: COLORS.tertiary
+    }
 })
   
-  export default EditProfile
+export default EditProfile

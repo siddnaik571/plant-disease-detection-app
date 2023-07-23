@@ -71,7 +71,7 @@ const QueryBox=(props)=>{
                 <View><Image style={styles.avatar} source={{uri: props.obj.user.pimg}}/></View>
                 <View>
                     <Text style={styles.profileName}>{props.obj.user.name}</Text>
-                    <Text style={styles.profileDate}>1 day</Text>
+                    <Text style={styles.profileDate}>{(props.obj.postTime).toDate().toDateString().substr(4)}</Text>
                 </View>
             </View>
             <TouchableOpacity style={styles.queryBoxBody} 
@@ -94,7 +94,7 @@ const QueryBox=(props)=>{
                     <MaterialCommunityIcons 
                         name={upVote? 'arrow-up-bold':'arrow-up-bold-outline'} 
                         size={22} 
-                        color={upVote? '#248232':'#708090'}
+                        color={upVote? COLORS.primary:COLORS.graydark}
                         onPress={()=>changeUpVoteState(props.obj.id)}
                     />
                     <Text style={styles.iconData}>{upvoteNo}</Text>
@@ -104,7 +104,7 @@ const QueryBox=(props)=>{
                     <MaterialCommunityIcons 
                         name={downVote? 'arrow-down-bold':'arrow-down-bold-outline'} 
                         size={22} 
-                        color={downVote? '#248232':'#708090'}
+                        color={downVote? COLORS.primary:COLORS.graydark}
                         onPress={()=>changeDownVoteState(props.obj.id)}
                     />
                     <Text style={styles.iconData}>{downvoteNo}</Text>
@@ -113,7 +113,7 @@ const QueryBox=(props)=>{
                     <MaterialCommunityIcons 
                         name='comment-outline' 
                         size={20} 
-                        color='#708090'
+                        color={COLORS.graydark}
                     />
                     <Text style={styles.iconData}>{props.obj.commentList.length-1}</Text>
                 </View>
@@ -124,15 +124,16 @@ const QueryBox=(props)=>{
 
 const styles=StyleSheet.create({
     queryBox: {
-        borderColor: '#D9D9D9',
-        borderWidth: 1,
+        // borderColor: COLORS.graylight,
+        // borderWidth: 1,
         minHeight: 125,
         width: '100%',
         marginBottom: 26,
-        borderRadius: 5
+        borderRadius: 5,
+        backgroundColor: COLORS.white
     },
     queryBoxHeader: {
-        borderBottomColor: '#D9D9D9',
+        borderBottomColor: COLORS.graylight,
         borderBottomWidth: 1,
         paddingHorizontal: 13,
         paddingVertical: 6,
@@ -151,10 +152,10 @@ const styles=StyleSheet.create({
     },
     profileDate: {
         fontSize: 11,
-        color: '#708090'
+        color: COLORS.graydark
     },
     queryBoxBody: {
-        borderBottomColor: '#D9D9D9',
+        borderBottomColor: COLORS.graylight,
         borderBottomWidth: 1,
         paddingHorizontal: 13,
         paddingVertical: 10,
@@ -167,7 +168,7 @@ const styles=StyleSheet.create({
     },
     iconData: {
         marginLeft: 1,
-        color: '#708090'
+        color: COLORS.graydark
     }
 })
 

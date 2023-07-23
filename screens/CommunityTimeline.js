@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView, Pressable, RefreshControl } from 'react-native'
+import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView, Pressable, RefreshControl, ImageBackground} from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar, QueryBox, TabBar } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -71,6 +71,7 @@ const CommunityTimeline=({navigation,route})=>{
     return (
         <SafeAreaView style={styles.container}>
             <FocussedStatusBar background={COLORS.primary}/>
+            <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%'}}>
             <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} progressBackgroundColor={COLORS.white} colors={[COLORS.primary]}/>}>
                 <Text style={styles.mainText}>Ask Community</Text>
@@ -78,6 +79,7 @@ const CommunityTimeline=({navigation,route})=>{
                     {queryJSX}
                 </View>
             </ScrollView>
+            </ImageBackground>
             <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.push('AskCommunity')}>
                 <Ionicons name="pencil" color={COLORS.white}/>
                 <Text style={styles.button}>Ask Community</Text>
@@ -100,13 +102,13 @@ const styles=StyleSheet.create({
     },
     mainText: {
         fontSize: SIZES.extraLarge,
-        color: COLORS.secondary,
+        color: COLORS.tertiary,
         marginTop: 45,
         marginBottom: 35,
         fontFamily: FONTS.semiBold
     },
     buttonContainer: {
-        backgroundColor: COLORS.primary,
+        backgroundColor: COLORS.tertiary,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

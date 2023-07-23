@@ -4,14 +4,15 @@ import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, Touc
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar } from '../components'
 import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons'
-import { collection, getDocs } from 'firebase/firestore/lite'
+import { collection, getDocs} from 'firebase/firestore/lite'
 import { db } from './firebase/firebase-config'
 
-const Balcony2 = ({navigation}) => {
+const Procedure = ({navigation}) => {
+
     const [procedure, setProcedure]= useState([])
 
-    const following = procedure.map((item)=>{
-        if(item.id==3)
+    const following=procedure.map((item)=>{
+        if(item.id==1)
         {
             return item.steps.map((component)=> <View key={Math.random()*200000}><Text style={styles.text}>{component}</Text></View>)
         }
@@ -33,32 +34,32 @@ const Balcony2 = ({navigation}) => {
         <SafeAreaView style={styles.container}>
             <FocussedStatusBar background={COLORS.primary}/>
             <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%'}}>
-            <View style={styles.header}>
-                <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('PlantCareTips')}/>
-                <Text style={styles.ztext}>Balcony</Text>
-                <View style={{width: 30, height: 30}}></View>
-            </View>
-        
-            <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}>
-                <View style={styles.mainBox}>
-                    <View>
-                        <Text style={styles.heading}>Planting Saplings</Text>
-                    </View>
-                    <View style={styles.imgCont}>
-                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fcheck%20sunlight.jpg?alt=media&token=1ae68e56-b4c0-495b-ada5-0eb6f53ac3f7'}} style={styles.image} resizeMode='cover'/></View>
-                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Flarge%20pots.jpg?alt=media&token=2cb9284f-4ddf-4f5e-9910-4c94db3ffa19'}} style={styles.image} resizeMode='cover'/></View>
-                    </View>
-                    <View style={styles.mainContent}> 
-                        {following}
-                    </View>
+                <View style={styles.header}>
+                    <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('PlantCareTips')}/>
+                    <Text style={styles.ztext}>Growing plants</Text>
+                    <View style={{width: 30, height: 30}}></View>
                 </View>
-            </ScrollView>
+
+                <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}>
+                    <View style={styles.mainBox}>
+                        <View>
+                            <Text style={styles.heading}>Planting Seeds</Text>
+                        </View>
+                        <View style={styles.imgCont}>
+                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fpotting%20soil.jfif?alt=media&token=0ca500d7-8490-4ef4-80e7-98334bc2c5e5'}} style={styles.image} resizeMode='cover'/></View>
+                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fseedlings.jfif?alt=media&token=1f300e94-6958-47de-b80c-feeb3b1459d4'}} style={styles.image} resizeMode='cover'/></View>
+                    </View>
+                        <View style={styles.mainContent}>
+                            {following}
+                        </View>
+                    </View>
+                </ScrollView>
             </ImageBackground>
         </SafeAreaView>
     )
 }
 
-export default Balcony2
+export default Procedure
 
 const styles = StyleSheet.create({
     header: {
@@ -93,7 +94,6 @@ const styles = StyleSheet.create({
     },
     mainBox: {
         width: '100%',
-        flexDirection: 'row',
         flexWrap: 'wrap',
         rowGap: 10,
         marginTop: 20,

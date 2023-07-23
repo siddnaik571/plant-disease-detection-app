@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, Pressable } from 'react-native'
+import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, Pressable, ImageBackground } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar } from '../components'
 import { Ionicons, MaterialIcons } from '@expo/vector-icons'
@@ -25,10 +25,11 @@ const UserProfile = ({navigation},props) => {
     return (
         <SafeAreaView style={styles.container}>
             <FocussedStatusBar background={COLORS.primary}/>
+            <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{width: '100%', flex: 1}}>
             <View style={styles.header}>
-                <Ionicons name='chevron-back' size={20} color={COLORS.graydark} onPress={()=>navigation.push('HomeScreen')}/>
-                <Text style={{color: COLORS.graydark, fontFamily: FONTS.semiBold}}>My Profile</Text>
-                <Ionicons name='settings-outline' size={20} color={COLORS.graydark}/>
+                <Ionicons name='chevron-back' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('HomeScreen')}/>
+                <Text style={styles.ztext}>My Profile</Text>
+                <View style={{width: 30, height: 30}}></View>
             </View>
             <View style={styles.secondaryContainer}>
                 <View style={styles.userInfo}>
@@ -53,7 +54,7 @@ const UserProfile = ({navigation},props) => {
                     </View>
                     <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.optionContainer}>
+                <TouchableOpacity style={styles.optionContainer}  onPress={()=>navigation.push('AppInfo')}>
                     <View style={styles.option}>
                         <MaterialIcons name='info-outline' size={25} color={COLORS.graydark}/>
                         <Text style={{color: COLORS.graydark, fontSize: SIZES.medium}}>App Info</Text>
@@ -68,6 +69,7 @@ const UserProfile = ({navigation},props) => {
                     <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
                 </TouchableOpacity>
             </View>
+            </ImageBackground>
         </SafeAreaView>
     )
 }
@@ -88,8 +90,8 @@ const styles=StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
-        borderBottomWidth: 1,
-        borderColor: COLORS.graylight,
+        // borderBottomWidth: 1,
+        // borderColor: COLORS.graylight,
     },
     secondaryContainer: {
         width: '100%',
@@ -99,12 +101,16 @@ const styles=StyleSheet.create({
     },
     userInfo: {
         flexDirection: 'row',
-        gap: 20
+        gap: 20,
+        backgroundColor: COLORS.white,
+        marginBottom: 20,
+        borderRadius: 5,
+        paddingVertical: 8,
+        alignItems: 'center'
     },
     imageContainer: {
         flexDirection: 'row',
-        padding: 9,
-        marginBottom: 20,
+        paddingHorizontal: 9,
         alignItems: 'center',
     },
     userImg: {
@@ -115,7 +121,7 @@ const styles=StyleSheet.create({
     },
     name: {
         color: COLORS.primary,
-        fontSize: SIZES.medium,
+        fontSize: SIZES.large,
         fontFamily: FONTS.medium,
         marginVertical: 2
     },
@@ -123,14 +129,14 @@ const styles=StyleSheet.create({
         color: COLORS.graydark,
         fontSize: SIZES.font,
         fontFamily: FONTS.medium,
-        marginVertical: 4
+        marginBottom: 4
     },
     buttonContainer: {
         backgroundColor: COLORS.primary,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 7,
-        borderRadius: 4,
+        borderRadius: 5,
         borderMargin:10,
         marginVertical:10,
     }, 
@@ -140,12 +146,21 @@ const styles=StyleSheet.create({
     optionContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 20
+        backgroundColor: COLORS.white,
+        paddingVertical: 10,
+        paddingHorizontal: 8,
+        marginBottom: 20,
+        borderRadius: 5
     },
     option: {
         flexDirection: 'row',
         gap:8
     },
+    ztext: {
+        fontSize: SIZES.large,
+        fontFamily: FONTS.bold,
+        color: COLORS.tertiary
+    }
 })  
 
 export default UserProfile

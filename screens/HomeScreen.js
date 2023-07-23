@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image, ScrollView, ActivityIndicator, RefreshControl } from 'react-native'
+import { Text, View, StyleSheet, SafeAreaView, TouchableOpacity, Image, ScrollView, ActivityIndicator, RefreshControl, ImageBackground } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar, Header } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -68,6 +68,8 @@ const HomeScreen = ({navigation, route}) => {
     return (
         <SafeAreaView style={styles.container} >
             <FocussedStatusBar background={COLORS.primary}/>
+            {/* <Header/> */}
+            <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex: 1}}>
             <Header/>
             <ScrollView contentContainerStyle={styles.secondaryContainer} 
                         refreshControl={<RefreshControl 
@@ -80,6 +82,9 @@ const HomeScreen = ({navigation, route}) => {
                 <View style={styles.textBox}>
                     <Text style={styles.subText}>Hi, {user.displayName}</Text>
                     <Text style={styles.mainText}>Find solutions on plant diseases </Text>
+                </View>
+                <View style={styles.imgCont}>
+                    <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/Background.jpg?alt=media&token=fb602254-a7e0-46dc-a12e-92c46f725c75'}} style={styles.image} resizeMode='contain'/>
                 </View>
                 <View style={styles.mainBox}>
                     <TouchableOpacity onPress={()=>navigation.navigate('Scanner')} style={styles.subBox}>
@@ -97,20 +102,23 @@ const HomeScreen = ({navigation, route}) => {
                 </View>
                 <View style={styles.weatherBox}>
                     {weatherData?
-                        <View style={{width: '100%',flexDirection: 'row', justifyContent: 'space-between'}}> 
+                        <View style={{width: '100%',flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}> 
                             <View>
+                                <Text style={styles.loc}>{(weatherData.weather[0].description).charAt(0).toUpperCase()+(weatherData.weather[0].description).slice(1)}</Text>    
                                 <Text style={styles.temp}>{Math.round(weatherData.main.temp-273.15)}°C</Text>
                                 <View style={{flexDirection: 'row', gap: 3, alignItems: 'center'}}>
                                     <Ionicons name='location-sharp' size={18} color={COLORS.tertiary}/>
                                     <Text style={styles.loc}>{weatherData.name}</Text>
                                 </View>
-                                {/* <Text style={styles.loc}>{weatherData.weather[0].description}</Text> */}
                             </View>
-                            <Image style={styles.wimage} source={{uri: `https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/${weatherData.weather[0].main}.png?alt=media`}} resizeMode='contain'/>
+                            <View style={{backgroundColor: COLORS.white}}>
+                                <Image style={styles.wimage} source={{uri: `https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/${weatherData.weather[0].main}.png?alt=media`}} resizeMode='contain'/>
+                            </View>
                         </View>:<ActivityIndicator size={'large'} color={COLORS.secondary}/>
                     }
                 </View>
             </ScrollView>
+            </ImageBackground>
         </SafeAreaView>
   )
 }
@@ -140,7 +148,7 @@ const styles = StyleSheet.create({
     subBox: {
         height: '100%',
         width: '31%',
-        borderRadius: 7,
+        borderRadius: 8,
         alignItems: 'center',
         justifyContent: 'center',
         gap: 4,
@@ -152,17 +160,17 @@ const styles = StyleSheet.create({
         color: COLORS.secondary
     },
     weatherBox: {
-        height: 150,
+        height: 120,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 15,
+        padding: 20,
         borderRadius: 7,
-        marginVertical: 30,
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderColor: '#EBEFEC'
+        marginVertical: 20,
+        backgroundColor: COLORS.white,
+        // borderWidth: 1,
+        // borderColor: '#EBEFEC'
     },
     temp: {
         fontSize: 40,
@@ -172,20 +180,21 @@ const styles = StyleSheet.create({
         color: COLORS.tertiary
     },
     textBox: {
-        marginBottom: 50,
+        marginBottom: 10,
         width: '100%',
+        marginTop: 30
     },
     mainText: {
         fontSize: SIZES.extraLarge,
-        fontFamily: FONTS.semiBold,
-        color: COLORS.secondary,
+        fontFamily: FONTS.bold,
+        color: COLORS.tertiary,
         maxWidth: '70%'
     },
     subText: {
         fontSize: SIZES.large,
-        fontFamily: FONTS.medium,
+        fontFamily: FONTS.semiBold,
         // color: '#99A0A7',
-        color:  COLORS.tertiary,
+        color:  COLORS.primary,
         marginBottom:  7
     },
     pattern: {
@@ -207,5 +216,19 @@ const styles = StyleSheet.create({
     aicon: {
         width: 60,
         height: 60
-    }
+    },
+    imgCont: {
+        height: 200,
+        width: '100%',
+        // borderWidth: 1,
+        // borderColor: '#D9D9D9',
+        borderRadius: 10,
+        marginVertical: 20,
+        alignItems: 'center'
+      },
+      image: {
+        height: '100%',
+        width: '100%',
+        borderRadius: 10
+      }
 })

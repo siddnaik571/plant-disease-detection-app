@@ -1,9 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, TextInput, Button, SafeAreaView, FlatList, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native'
 import { COLORS, FONTS, SIZES } from '../constants'
 import { FocussedStatusBar, QueryBox } from '../components'
-import Ionicons from '@expo/vector-icons/Ionicons'
+import { Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons'
 import { collection, getDocs, doc, setDoc, where, query, getDoc } from 'firebase/firestore/lite'
 import { db } from './firebase/firebase-config'
 
@@ -44,35 +44,47 @@ const DetectionScreen2 = ({navigation, route}) => {
         setShowSolution(prev=>!prev)
     }
 
-  return (
-    <SafeAreaView style={styles.container}>
-        <FocussedStatusBar background={COLORS.primary}/>
-        <View style={styles.header}>
-          <Ionicons name='arrow-back-outline' size={30} color={COLORS.graydark} onPress={()=>navigation.push('Scanner')}/>
-          {/* <Ionicons name='settings-outline' size={20} color={COLORS.graydark}/> */}
-        </View>
-        <View style={{height: '10%'}}></View>
-        <View style={styles.secondaryContainer}> 
-            <Text style={styles.mainText}>Disease Detection</Text>
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={{uri: imageUri}}/>
-                <View style={{width: '70%',justifyContent: 'center',alignItems: 'center', marginTop: 40, marginBottom: 15}}>
-                    <Text>Disease Detected</Text>
-                    <Text style={styles.diseaseName}>{data.class}</Text>
-                    <Text>Potato</Text>
+    let isDiseased
+    if(data.class==="Healthy"||data.class==="Non Leaves"){
+        isDiseased=false
+    }else{
+        isDiseased=true
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <FocussedStatusBar background={COLORS.primary}/>
+            <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                <View style={styles.header}>
+                    <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('Scanner')}/>
+                    <Text style={styles.stext}>Disease Detection</Text>
+                    <View style={{width: 30, height: 30}}></View>
                 </View>
-                <ScrollView style={{width: '70%'}} showsVerticalScrollIndicator={false}>
-                    <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('SingleDB', {disease: obj, dimg: imageUri})}>
-                        <Text>MORE INFO</Text>
-                    </TouchableOpacity>
-                    {showCause && <View style={styles.info}>
-                        <Text style={{textAlign: 'justify'}}>
+                <View style={{height: '20%'}}></View>
+                <View style={styles.secondaryContainer}> 
+                    {/* <Text style={styles.mainText}>Disease Detection</Text> */}
+                    <View style={styles.imageContainer}>
+                        <Image style={styles.image} source={{uri: imageUri}}/>
+                        <View style={{width: '70%',justifyContent: 'center',alignItems: 'center', marginTop: 40, marginBottom: 15, gap: 5}}>
+                            {isDiseased?<Text style={{color: COLORS.graylight, fontSize: SIZES.medium}}>Disease Detected</Text>:<Text style={{color: COLORS.graylight, fontSize: SIZES.medium}}>Disease Not 
+                            Detected</Text>}
+                            <Text style={styles.diseaseName}>{data.class}</Text>
+                            <Text style={{color: COLORS.tertiary, fontSize: SIZES.large, fontFamily: FONTS.semiBold}}>Potato</Text>
+                        </View>
+                        <ScrollView style={{width: '70%'}} showsVerticalScrollIndicator={false}>
+                            {isDiseased && <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('SingleDB', {disease: obj, dimg: imageUri, returnTo: 'HomeScreen'})}>
+                            <Text style={{color: COLORS.secondary, fontFamily: FONTS.semiBold}}>MORE INFO</Text>
+                            <Ionicons name='chevron-forward' size={20} color={COLORS.grayneutral}/>
+                            </TouchableOpacity>}
+                            {showCause && <View style={styles.info}>
+                            <Text style={{textAlign: 'justify'}}>
                             {obj.Cause}
                         </Text>
                     </View>}
                 </ScrollView>
             </View>
         </View>
+        </ImageBackground>
     </SafeAreaView>
   )
 }
@@ -95,8 +107,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
-        borderBottomWidth: 1,
-        borderColor: COLORS.graylight,
+        // borderBottomWidth: 1,
+        // borderColor: COLORS.graylight,
       },
     secondaryContainer: {
         flex: 1,
@@ -118,25 +130,33 @@ const styles = StyleSheet.create({
     image: {
         width: 300,
         height: 300,
+        borderRadius: 8
     },
     button: {
-        width: 150,
-        height: 30,
-        borderColor: '#248232',
-        borderWidth: 1,
-        borderRadius: 15,
+        width: 170,
+        height: 40,
+        backgroundColor: COLORS.white,
+        // borderWidth: 1,
+        borderRadius: 30,
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 5,
         marginBottom: 5,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        gap: 7
     },
     info: {
         marginTop: 10
     },
     diseaseName: {
-        color: '#2BA84A',
-        fontSize: SIZES.medium,
+        color: COLORS.white,
+        fontSize: SIZES.extraLarge,
         fontFamily: FONTS.semiBold
+    },
+    stext: {
+        fontSize: SIZES.large,
+        fontFamily: FONTS.bold,
+        color: COLORS.tertiary
     }
 })

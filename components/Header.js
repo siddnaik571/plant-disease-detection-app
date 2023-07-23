@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View, Pressable, Image } from 'react-native'
 import React from 'react'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import { COLORS, FONTS, SIZES } from '../constants'
 
 const Header = (props) => {
   return (
     <Pressable style={styles.header}>
         {/* <Text>Plantify App</Text> */}
-        <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/plantifytypelogo.png?alt=media&token=e582219b-f19a-4093-a6ad-08d5d488b82c'}} style={styles.logo} resizeMode='contain'/>
+        {/* <Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/plantifytypelogo.png?alt=media&token=e582219b-f19a-4093-a6ad-08d5d488b82c'}} style={styles.logo} resizeMode='contain'/> */}
         {/* <Ionicons name='ellipsis-vertical' size={20} color="#708090"/> */}
+        <Text style={styles.stext}>Plantify</Text>
     </Pressable>
   )
 }
@@ -26,11 +28,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 16,
-        borderBottomWidth: 1,
-        borderColor: '#EBEFEC',
+        // borderBottomWidth: 1,
+        // borderColor: '#EBEFEC',
     },
     logo: {
       width: 70,
       height: 30
+    },
+    stext: {
+      fontSize: SIZES.large,
+      fontFamily: FONTS.bold,
+      color: COLORS.tertiary
     }
 })

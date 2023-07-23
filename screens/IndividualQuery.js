@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, TextInput, ScrollView, ImageBackground } from 'react-native'
 import React from 'react'
 import { FocussedStatusBar, QueryBox, Comment } from '../components'
 import Ionicons from '@expo/vector-icons/Ionicons'
@@ -101,27 +101,32 @@ const IndividualQuery = ({navigation,route}) => {
         }
     })
 
-  return (
-    <SafeAreaView style={styles.container}>
-        <FocussedStatusBar background={COLORS.primary}/>
-        <View style={styles.secondaryContainer}>
+    return (
+        <SafeAreaView style={styles.container}>
+            <FocussedStatusBar background={COLORS.primary}/>
+            <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%'}}>
             <View style={styles.header}>
-                <AntDesign name='arrowleft' size={20} color="#708090" onPress={()=>navigation.navigate('CommunityTimeline')}/>
+                <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('HomeScreen')}/>
+                {/* <Text style={styles.ztext}>Care Tips</Text> */}
+                <View style={{width: 30, height: 30}}></View>
             </View>
-            <View style={{flex: 5}}>
-                {commentJSX}
-            </View>
-            <View style={styles.commentBox}>
-                <TextInput placeholder='Add a comment'
+            <View style={styles.secondaryContainer}>
+                <QueryBox obj={route.params.obj} updateUpVote={route.params.updateUpVote} updateDownVote={route.params.updateDownVote} navigation={navigation}/>
+                <ScrollView style={{flex: 5}}>
+                    {commentJSX}
+                </ScrollView>
+                <View style={styles.commentBox}>
+                    <TextInput placeholder='Add a comment'
                            value={comment}
                            onChangeText={text=>setComment(text)}
                            multiline={true}
-                />
-                <TouchableOpacity style={styles.buttonContainer} onPress={UpdateData}>
-                    <Text style={styles.button}>Post</Text>
-                </TouchableOpacity>
+                    />
+                    <TouchableOpacity style={styles.buttonContainer} onPress={UpdateData}>
+                        <Text style={styles.button}>Post</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-        </View>
+            </ImageBackground>
     </SafeAreaView>
   )
 }
@@ -166,14 +171,15 @@ const styles=StyleSheet.create({
     commentBox: {
         height: 50,
         padding: 10,
-        borderWidth: 1,
-        borderColor: COLORS.graylight,
+        // borderWidth: 1,
+        // borderColor: COLORS.graylight,
         borderRadius: 5,
         marginHorizontal: 16,
         marginVertical: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: COLORS.white
     }
 })
 

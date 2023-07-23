@@ -5,7 +5,7 @@ import { COLORS, FONTS, SIZES } from '../constants'
 const DiseaseBox = (props) => {
 
   return (
-    <TouchableOpacity style={styles.contBox} onPress={()=>props.navigation.navigate('SingleDB', {key: props.disease.id, disease: props.disease, dimg: props.disease.img})}>
+    <TouchableOpacity style={styles.contBox} onPress={()=>props.navigation.navigate('SingleDB', {key: props.disease.id, disease: props.disease, dimg: props.disease.img, returnTo: 'DiseaseInfo'})}>
         <View style={styles.upperBox}>
           <Image source={{uri: props.disease.img}} style={styles.image}/>
         </View>
@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
         width: '47%',
         alignItems: 'center',
         justifyContent: 'center' ,
-        borderWidth: 1,
         borderRadius: 5,
-        borderColor: COLORS.graylight
+        borderColor: COLORS.graylight,
+        backgroundColor: COLORS.white
     },
     bottomBar: {
       height: '25%',
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-end',
       borderBottomEndRadius: 5,
       borderBottomLeftRadius: 5,
-      paddingHorizontal: 4,
+      paddingHorizontal: 8,
       paddingVertical: 2,
       // backgroundColor: 'white'
     },
