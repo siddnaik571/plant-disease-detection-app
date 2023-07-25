@@ -26,49 +26,49 @@ const UserProfile = ({navigation},props) => {
         <SafeAreaView style={styles.container}>
             <FocussedStatusBar background={COLORS.primary}/>
             <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{width: '100%', flex: 1}}>
-            <View style={styles.header}>
-                <Ionicons name='chevron-back' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('HomeScreen')}/>
-                <Text style={styles.ztext}>My Profile</Text>
-                <View style={{width: 30, height: 30}}></View>
-            </View>
-            <View style={styles.secondaryContainer}>
-                <View style={styles.userInfo}>
-                    <View style={styles.imageContainer}>
-                        <Image
-                            style={styles.userImg}
-                            source={{uri: user.photoURL}}
-                        />
-                    </View>
-                    <View>
-                        <Text style={styles.name}>{user.displayName}</Text>
-                        <Text style={styles.email}>{user.email}</Text>
-                        <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.push('EditProfile')}>
-                            <Text style={styles.button}>Edit Profile</Text>
-                        </TouchableOpacity>
-                    </View>
+                <View style={styles.header}>
+                    <Ionicons name='chevron-back' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('HomeScreen')}/>
+                    <Text style={styles.ztext}>My Profile</Text>
+                    <View style={{width: 30, height: 30}}></View>
                 </View>
-                <TouchableOpacity style={styles.optionContainer} onPress={()=>navigation.push('Help')}>
-                    <View style={styles.option}>
-                        <MaterialIcons name='help-outline' size={25} color={COLORS.graydark}/>
-                        <Text style={{color: COLORS.graydark, fontSize: SIZES.medium}}>Help</Text>
+                <View style={styles.secondaryContainer}>
+                    <View style={styles.userInfo}>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                style={styles.userImg}
+                                source={{uri: user.photoURL}}
+                            />
+                        </View>
+                        <View>
+                            <Text style={styles.name}>{user.displayName}</Text>
+                            <Text style={styles.email}>{user.email}</Text>
+                            <TouchableOpacity style={styles.buttonContainer} onPress={()=>navigation.push('EditProfile')}>
+                                <Text style={styles.button}>Edit Profile</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.optionContainer}  onPress={()=>navigation.push('AppInfo')}>
-                    <View style={styles.option}>
-                        <MaterialIcons name='info-outline' size={25} color={COLORS.graydark}/>
-                        <Text style={{color: COLORS.graydark, fontSize: SIZES.medium}}>App Info</Text>
-                    </View>
-                    <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.optionContainer} onPress={LogOutUser}>
-                    <View style={styles.option}>
-                        <MaterialIcons name='logout' size={25} color={COLORS.graydark}/>
-                        <Text style={{color: COLORS.graydark, fontSize: SIZES.medium}}>Log Out</Text>
-                    </View>
-                    <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity style={styles.optionContainer} onPress={()=>navigation.push('Help')}>
+                        <View style={styles.option}>
+                            <MaterialIcons name='help-outline' size={25} color={COLORS.graydark}/>
+                            <Text style={{color: COLORS.graydark, fontSize: SIZES.medium}}>Help</Text>
+                        </View>
+                        <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionContainer}  onPress={()=>navigation.push('AppInfo')}>
+                        <View style={styles.option}>
+                            <MaterialIcons name='info-outline' size={25} color={COLORS.graydark}/>
+                            <Text style={{color: COLORS.graydark, fontSize: SIZES.medium}}>App Info</Text>
+                        </View>
+                        <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.optionContainer} onPress={LogOutUser}>
+                        <View style={styles.option}>
+                            <MaterialIcons name='logout' size={25} color={COLORS.graydark}/>
+                            <Text style={{color: COLORS.graydark, fontSize: SIZES.medium}}>Log Out</Text>
+                        </View>
+                        <Ionicons name='chevron-forward' size={20} color={COLORS.graydark}/>
+                    </TouchableOpacity>
+                </View>
             </ImageBackground>
         </SafeAreaView>
     )

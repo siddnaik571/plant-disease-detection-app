@@ -112,7 +112,7 @@ const Signup = ({navigation}) => {
                 </View>
             </ImageBackground>
         </SafeAreaView>
-   )
+    )
 }
 
 const styles=StyleSheet.create({

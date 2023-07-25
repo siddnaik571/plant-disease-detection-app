@@ -124,5 +124,5 @@ const styles = StyleSheet.create({
         fontSize: SIZES.large,
         fontFamily: FONTS.bold,
         color: COLORS.tertiary
-  }
+    }
 })

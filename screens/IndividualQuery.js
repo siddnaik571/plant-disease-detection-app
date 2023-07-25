@@ -106,7 +106,7 @@ const IndividualQuery = ({navigation,route}) => {
             <FocussedStatusBar background={COLORS.primary}/>
             <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%'}}>
             <View style={styles.header}>
-                <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('HomeScreen')}/>
+                <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('CommunityTimeline')}/>
                 {/* <Text style={styles.ztext}>Care Tips</Text> */}
                 <View style={{width: 30, height: 30}}></View>
             </View>

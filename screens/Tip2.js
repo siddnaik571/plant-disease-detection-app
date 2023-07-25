@@ -32,30 +32,30 @@ const Tip2 = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <FocussedStatusBar background={COLORS.primary}/>
-        <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%'}}>
-        <View style={styles.header}>
-            <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('PlantCareTips')}/>
-            <Text style={styles.ztext}>Tips</Text>
-            <View style={{width: 30, height: 30}}></View>
-        </View>
+            <ImageBackground source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/DreamShaper_v7_light_and_bright_green_background_with_small_an_4%20(1)%201.png?alt=media&token=5c268dd1-844c-40df-9ab1-f479b573b9f3'}} style={{flex:1, width: '100%'}}>
+                <View style={styles.header}>
+                    <AntDesign name='arrowleft' size={30} color={COLORS.tertiary} onPress={()=>navigation.push('PlantCareTips')}/>
+                    <Text style={styles.ztext}>Tips</Text>
+                    <View style={{width: 30, height: 30}}></View>
+                </View>
         
-        <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}>
-          <View style={styles.mainBox}>
-          <View>
-              <Text style={styles.heading}>Tips for Balcony</Text>
-          </View>
-          <View style={styles.imgCont}>
-                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fpotting%20soil.jfif?alt=media&token=0ca500d7-8490-4ef4-80e7-98334bc2c5e5'}} style={styles.image} resizeMode='cover'/></View>
-                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fseedlings.jfif?alt=media&token=1f300e94-6958-47de-b80c-feeb3b1459d4'}} style={styles.image} resizeMode='cover'/></View>
+                <ScrollView style={styles.secondaryContainer} showsVerticalScrollIndicator={false}>
+                    <View style={styles.mainBox}>
+                        <View>
+                            <Text style={styles.heading}>Tips for Balcony</Text>
+                        </View>
+                        <View style={styles.imgCont}>
+                            <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fpotting%20soil.jfif?alt=media&token=0ca500d7-8490-4ef4-80e7-98334bc2c5e5'}} style={styles.image} resizeMode='cover'/></View>
+                            <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fseedlings.jfif?alt=media&token=1f300e94-6958-47de-b80c-feeb3b1459d4'}} style={styles.image} resizeMode='cover'/></View>
+                        </View>
+                        <View style={styles.mainContent}>
+                            {following}
+                        </View>
                     </View>
-            <View style={styles.mainContent}>
-              {following}
-            </View>
-          </View>
-        </ScrollView>
-        </ImageBackground>
-    </SafeAreaView>
-  )
+                </ScrollView>
+            </ImageBackground>
+        </SafeAreaView>
+    ) 
 }
 
 export default Tip2

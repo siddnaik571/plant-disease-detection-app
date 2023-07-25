@@ -29,7 +29,7 @@ const DetectionScreen = ({navigation, route}) => {
                 name: 'image.jpg',
             });
   
-            const response = await fetch('http://192.168.18.126:8080/predict', {
+            const response = await fetch('http://192.168.51.126:8080/predict', {
                 method: 'POST',
                 body: formData,
                 headers: {

@@ -45,7 +45,7 @@ const DetectionScreen2 = ({navigation, route}) => {
     }
 
     let isDiseased
-    if(data.class==="Healthy"||data.class==="Non Leaves"){
+    if(data.class==="Healthy"||data.class==="NonLeaves"){
         isDiseased=false
     }else{
         isDiseased=true
@@ -69,7 +69,7 @@ const DetectionScreen2 = ({navigation, route}) => {
                             {isDiseased?<Text style={{color: COLORS.graylight, fontSize: SIZES.medium}}>Disease Detected</Text>:<Text style={{color: COLORS.graylight, fontSize: SIZES.medium}}>Disease Not 
                             Detected</Text>}
                             <Text style={styles.diseaseName}>{data.class}</Text>
-                            <Text style={{color: COLORS.tertiary, fontSize: SIZES.large, fontFamily: FONTS.semiBold}}>Potato</Text>
+                            {isDiseased && <Text style={{color: COLORS.tertiary, fontSize: SIZES.large, fontFamily: FONTS.semiBold}}>Potato</Text>}
                         </View>
                         <ScrollView style={{width: '70%'}} showsVerticalScrollIndicator={false}>
                             {isDiseased && <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('SingleDB', {disease: obj, dimg: imageUri, returnTo: 'HomeScreen'})}>

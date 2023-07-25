@@ -45,9 +45,9 @@ const Tip4 = ({navigation}) => {
                             <Text style={styles.heading}>Planting Options</Text>
                         </View>
                         <View style={styles.imgCont}>
-                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fpotting%20soil.jfif?alt=media&token=0ca500d7-8490-4ef4-80e7-98334bc2c5e5'}} style={styles.image} resizeMode='cover'/></View>
-                        <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fseedlings.jfif?alt=media&token=1f300e94-6958-47de-b80c-feeb3b1459d4'}} style={styles.image} resizeMode='cover'/></View>
-                    </View>
+                            <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fpotting%20soil.jfif?alt=media&token=0ca500d7-8490-4ef4-80e7-98334bc2c5e5'}} style={styles.image} resizeMode='cover'/></View>
+                            <View style={{width: '50%'}}><Image source={{uri: 'https://firebasestorage.googleapis.com/v0/b/plantify-app-bf1df.appspot.com/o/PlantCareTips%2Fseedlings.jfif?alt=media&token=1f300e94-6958-47de-b80c-feeb3b1459d4'}} style={styles.image} resizeMode='cover'/></View>
+                        </View>
                         <View style={styles.mainContent}>          
                             {following}
                         </View>
